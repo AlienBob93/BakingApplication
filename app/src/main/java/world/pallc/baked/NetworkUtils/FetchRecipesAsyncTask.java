@@ -1,46 +1,50 @@
 package world.pallc.baked.NetworkUtils;
 
+import android.content.ContentResolver;
+import android.content.ContentValues;
 import android.content.Context;
 import android.os.AsyncTask;
+import android.util.Log;
 
 import java.net.URL;
-import java.util.ArrayList;
 
-import world.pallc.baked.MainActivity;
+import static world.pallc.baked.Data.RecipeContract.RecipeEntry;
 
 /**
  * Created by Prashant Rao on 16-Jul-17.
  */
 
-public class FetchRecipesAsyncTask extends AsyncTask<Void, Void, ArrayList<String[]>> {
+public class FetchRecipesAsyncTask extends AsyncTask<Void, Void, Void> {
 
+    private static final String TAG = "FetchRecipesAsyncTask";
     private Context mContext;
 
     public FetchRecipesAsyncTask(Context context) {
-        mContext = context;
+        this.mContext = context;
     }
 
     @Override
-    protected ArrayList<String[]> doInBackground(Void... voids) {
+    protected Void doInBackground(Void... voids) {
+        try{
+            URL recipesRequestUrl = NetworkUtils.buildUrlForJson();
 
-        // TODO request from URL only if local DB is empty
-        // query the URL and parse the returned JSON object
-        URL requestRecipesUrl = NetworkUtils.buildUrlForJson();
+            String JsonResponse = NetworkUtils.getResponseFromHttpUrl(recipesRequestUrl);
 
-        try {
-            String JsonResponse = NetworkUtils.getResponseFromHttpUrl(requestRecipesUrl);
+            ContentValues[] recipeValues = JsonUtils.getRecipesFromJson(mContext, JsonResponse);
 
-            return JsonUtils.getRecipesFromJson(mContext, JsonResponse);
+            if (recipeValues != null && recipeValues.length != 0) {
+                ContentResolver contentResolver = mContext.getContentResolver();
+
+                contentResolver.delete(RecipeEntry.CONTENT_URI, null, null);
+                Log.i(TAG, "deleted old data");
+
+                contentResolver.bulkInsert(RecipeEntry.CONTENT_URI, recipeValues);
+                Log.i(TAG, "inserted new rows");
+            }
         } catch (Exception e) {
             e.printStackTrace();
-            return  null;
         }
-    }
-
-    @Override
-    protected void onPostExecute(ArrayList<String[]> strings) {
-        if (strings != null) {
-            MainActivity.setRecipeAdapter(strings);
-        }
+        return null;
     }
 }
+
