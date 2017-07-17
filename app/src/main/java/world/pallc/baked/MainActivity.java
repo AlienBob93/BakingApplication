@@ -11,7 +11,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 
-import world.pallc.baked.NetworkUtils.FetchRecipesAsyncTask;
+import world.pallc.baked.SyncUtils.RecipeSyncUtil;
 
 import static world.pallc.baked.Data.RecipeContract.RecipeEntry;
 
@@ -55,7 +55,7 @@ public class MainActivity extends AppCompatActivity
         getSupportLoaderManager().initLoader(ID_RECIPES_LOADER, null, this);
 
         // get network data
-        new FetchRecipesAsyncTask(this).execute();
+        RecipeSyncUtil.initialize(this);
     }
 
     @Override

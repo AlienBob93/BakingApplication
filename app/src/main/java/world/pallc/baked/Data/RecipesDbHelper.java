@@ -48,8 +48,8 @@ public class RecipesDbHelper extends SQLiteOpenHelper {
      */
     @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
-        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + RecipeEntry.RECIPES_LIST_TABLE_NAME);
-        //sqLiteDatabase.execSQL("ALTER TABLE IF EXISTS " + RecipeEntry.RECIPES_LIST_TABLE_NAME);
+        //sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + RecipeEntry.RECIPES_LIST_TABLE_NAME);
+        sqLiteDatabase.execSQL("ALTER TABLE IF EXISTS " + RecipeEntry.RECIPES_LIST_TABLE_NAME);
         onCreate(sqLiteDatabase);
     }
 }

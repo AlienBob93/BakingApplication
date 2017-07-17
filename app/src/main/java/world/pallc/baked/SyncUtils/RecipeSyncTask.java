@@ -1,30 +1,26 @@
-package world.pallc.baked.NetworkUtils;
+package world.pallc.baked.SyncUtils;
 
 import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Context;
-import android.os.AsyncTask;
 import android.util.Log;
 
 import java.net.URL;
 
+import world.pallc.baked.NetworkUtils.JsonUtils;
+import world.pallc.baked.NetworkUtils.NetworkUtils;
+
 import static world.pallc.baked.Data.RecipeContract.RecipeEntry;
 
 /**
- * Created by Prashant Rao on 16-Jul-17.
+ * Created by Prashant Rao on 17-Jul-17.
  */
 
-public class FetchRecipesAsyncTask extends AsyncTask<Void, Void, Void> {
+public class RecipeSyncTask {
 
-    private static final String TAG = "FetchRecipesAsyncTask";
-    private Context mContext;
+    private static final String TAG = "RecipeSyncTask";
 
-    public FetchRecipesAsyncTask(Context context) {
-        this.mContext = context;
-    }
-
-    @Override
-    protected Void doInBackground(Void... voids) {
+    synchronized public static void syncRecipe(Context mContext) {
         try{
             URL recipesRequestUrl = NetworkUtils.buildUrlForJson();
 
@@ -44,7 +40,5 @@ public class FetchRecipesAsyncTask extends AsyncTask<Void, Void, Void> {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return null;
     }
 }
-

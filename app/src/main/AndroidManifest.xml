@@ -28,6 +28,9 @@
             android:exported="false"/>
 
         <!--Service for immediate syncs-->
+        <service
+            android:name=".SyncUtils.RecipeSyncIntentService"
+            android:exported="false"/>
     </application>
 
 </manifest>

@@ -8,10 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import java.util.ArrayList;
-
 import world.pallc.baked.Data.RecipeContract;
-import world.pallc.baked.Data.RecipesClass;
 
 /**
  * Created by Prashant Rao on 16-Jul-17.
