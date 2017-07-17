@@ -3,6 +3,7 @@ package world.pallc.baked;
 import android.content.Context;
 import android.database.Cursor;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,8 +21,15 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.ViewHolder
     private Context mContext;
     private Cursor mCursor;
 
-    public RecipeAdapter(Context context) {
+    final private RecipeAdapterOnClickHandler mClickHandler;
+
+    public interface RecipeAdapterOnClickHandler {
+        void onClick(long clickedPosition);
+    }
+
+    public RecipeAdapter(Context context, RecipeAdapterOnClickHandler clickHandler) {
         this.mContext = context;
+        this.mClickHandler = clickHandler;
     }
 
     @Override
@@ -58,17 +66,31 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.ViewHolder
     }
 
     public void swapCursor(Cursor newCursor) {
-        // check if this cursor is the same as the previous cursor (mCursor)
+        // swap the new cursor with the previous cursor
         mCursor = newCursor;
+        // notify the adapter so the views can be updated
         notifyDataSetChanged();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         public TextView mRecipeName;
         public ViewHolder(View v) {
             super(v);
             mRecipeName = v.findViewById(R.id.recipe_info_text);
+            v.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View view) {
+            int clickedPosition = getAdapterPosition();
+
+            mCursor.moveToPosition(clickedPosition);
+            int recipeIDIndex = mCursor.getColumnIndex(RecipeContract.RecipeEntry._ID);
+            Long recipeId = mCursor.getLong(recipeIDIndex);
+            Log.i(TAG, "position " + clickedPosition + " clicked, with recipe ID " + recipeId);
+
+            mClickHandler.onClick(recipeId);
         }
     }
 }

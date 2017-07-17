@@ -1,5 +1,6 @@
 package world.pallc.baked;
 
+import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
@@ -16,7 +17,8 @@ import world.pallc.baked.SyncUtils.RecipeSyncUtil;
 import static world.pallc.baked.Data.RecipeContract.RecipeEntry;
 
 public class MainActivity extends AppCompatActivity
-        implements LoaderManager.LoaderCallbacks<Cursor> {
+        implements LoaderManager.LoaderCallbacks<Cursor>,
+        RecipeAdapter.RecipeAdapterOnClickHandler {
 
     private static final String TAG = "MainActivity";
 
@@ -43,8 +45,8 @@ public class MainActivity extends AppCompatActivity
         mRecyclerView.setLayoutManager(mLayoutManager);
         mRecyclerView.setHasFixedSize(true);
 
-        // specify an adapter (see also next example)
-        mAdapter = new RecipeAdapter(this);
+        // specify an adapter
+        mAdapter = new RecipeAdapter(this, this);
         mRecyclerView.setAdapter(mAdapter);
 
         /*
@@ -81,15 +83,22 @@ public class MainActivity extends AppCompatActivity
         Log.i(TAG, "onLoadFinished");
         // call the adapter's swapCursor method and pass in the new Cursor
         mAdapter.swapCursor(data);
-        /*if (mPosition == RecyclerView.NO_POSITION) {
+        if (mPosition == RecyclerView.NO_POSITION) {
             mPosition = 0;
         }
-        mRecyclerView.smoothScrollToPosition(mPosition);*/
+        mRecyclerView.smoothScrollToPosition(mPosition);
     }
 
     @Override
     public void onLoaderReset(Loader<Cursor> loader) {
         Log.i(TAG, "onLoaderReset");
         mAdapter.swapCursor(null);
+    }
+
+    @Override
+    public void onClick(long clickedID) {
+        Intent startRecipeStepsIntent = new Intent(this, RecipeStepsActivity.class);
+        startRecipeStepsIntent.putExtra("CLICKED_RECIPE_ID", clickedID);
+        startActivity(startRecipeStepsIntent);
     }
 }
