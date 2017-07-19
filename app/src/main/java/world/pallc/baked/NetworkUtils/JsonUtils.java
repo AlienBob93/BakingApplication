@@ -2,6 +2,7 @@ package world.pallc.baked.NetworkUtils;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.util.Log;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -16,6 +17,8 @@ import static world.pallc.baked.Data.RecipeContract.*;
  */
 
 public class JsonUtils {
+
+    private static final String TAG = "JsonUtils";
 
     public static ContentValues[] getRecipesFromJson(Context context, String recipeListJsonStr)
         throws JSONException {
@@ -56,6 +59,8 @@ public class JsonUtils {
             recipeStr.put(RecipeEntry.RECIPE_SERVINGS, recipeServings);
             recipeStr.put(RecipeEntry.RECIPE_INGREDIENTS, recipeIngredients.toString());
             recipeStr.put(RecipeEntry.RECIPE_STEPS, recipeSteps.toString());
+
+            Log.d(TAG, "recipe " + i + " steps:\n" + recipeSteps.toString());
 
             parsedRecipeList[i] = recipeStr;
         }
