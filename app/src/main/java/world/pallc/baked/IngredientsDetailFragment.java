@@ -4,7 +4,6 @@ import android.content.ContentResolver;
 import android.content.Context;
 import android.database.Cursor;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -17,7 +16,7 @@ import org.json.JSONArray;
 
 import java.util.ArrayList;
 
-import world.pallc.baked.Data.RecipeContract;
+import world.pallc.baked.CustomAdapters.IngredientsListAdapter;
 import world.pallc.baked.NetworkUtils.JsonUtils;
 
 import static world.pallc.baked.Data.RecipeContract.*;

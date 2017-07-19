@@ -1,4 +1,4 @@
-package world.pallc.baked;
+package world.pallc.baked.CustomAdapters;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
@@ -8,6 +8,8 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+
+import world.pallc.baked.R;
 
 /**
  * Created by Prashant Rao on 18-Jul-17.

@@ -1,7 +1,6 @@
 package world.pallc.baked;
 
 import android.content.ContentResolver;
-import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
@@ -20,11 +19,10 @@ import org.json.JSONException;
 
 import java.util.ArrayList;
 
-import world.pallc.baked.Data.RecipeContract;
+import world.pallc.baked.CustomAdapters.RecipeStepsMasterListAdapter;
 import world.pallc.baked.NetworkUtils.JsonUtils;
 
 import static world.pallc.baked.Data.RecipeContract.*;
-import static world.pallc.baked.NetworkUtils.JsonUtils.getRecipeSteps;
 
 /**
  * Created by Prashant Rao on 17-Jul-17.

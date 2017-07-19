@@ -12,6 +12,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 
+import world.pallc.baked.CustomAdapters.RecipeAdapter;
 import world.pallc.baked.SyncUtils.RecipeSyncUtil;
 
 import static world.pallc.baked.Data.RecipeContract.RecipeEntry;

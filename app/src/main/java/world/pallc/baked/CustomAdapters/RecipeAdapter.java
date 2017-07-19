@@ -1,4 +1,4 @@
-package world.pallc.baked;
+package world.pallc.baked.CustomAdapters;
 
 import android.content.Context;
 import android.database.Cursor;
@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import world.pallc.baked.Data.RecipeContract;
+import world.pallc.baked.R;
 
 /**
  * Created by Prashant Rao on 16-Jul-17.
